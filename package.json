@@ -1,0 +1,27 @@
+{
+  "name": "book-my-ticket",
+  "version": "1.0.0",
+  "description": "this is a backend project for booking movie tickets similar to bookmyshow",
+  "homepage": "https://github.com/benil09/book-my-ticket#readme",
+  "bugs": {
+    "url": "https://github.com/benil09/book-my-ticket/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benil09/book-my-ticket.git"
+  },
+  "license": "ISC",
+  "author": "Nilkamal",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.2"
+  }
+}
