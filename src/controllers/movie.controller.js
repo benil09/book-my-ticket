@@ -4,7 +4,7 @@ import { errResponseBody, successResponseBody } from "../utils/responseBody.js";
 
 export const createMovie = async (req, res) => {
   try {
-    const movie = await Movie.create(req.body);
+    const movie = await MovieService.createMovie(req.body);
     successResponseBody.data = movie;
     return res.status(201).json(successResponseBody);
   } catch (error) {
@@ -30,7 +30,7 @@ export const getMovie = async (req, res) => {
 
 export const deleteMovie = async (req, res) => {
   try {
-    const response = await Movie.findByIdAndDelete(req.params.id);
+    const response = await MovieService.deleteMoviebyid(req.params.id);
     if (!response) {
       errResponseBody.err = "No movie found with the given id";
       return res.status(404).json(errResponseBody);
