@@ -1,11 +1,18 @@
-import Movie from "../models/movie.model.js";
 import MovieService from "../services/movie.services.js";
 import { errResponseBody, successResponseBody } from "../utils/responseBody.js";
 
 export const createMovie = async (req, res) => {
   try {
-    const movie = await MovieService.createMovie(req.body);
-    successResponseBody.data = movie;
+    const response = await MovieService.createMovie(req.body);
+
+    if (response.err) {
+      errResponseBody.err = response.err;
+      errResponseBody.code = response.code;
+      errResponseBody.message =
+        "Validation failed on few parameters of request body";
+      return res.status(response.code).json(errResponseBody);
+    }
+    successResponseBody.data = response;
     return res.status(201).json(successResponseBody);
   } catch (error) {
     console.log(error);
@@ -15,7 +22,7 @@ export const createMovie = async (req, res) => {
 
 export const getMovie = async (req, res) => {
   try {
-    const response = await MovieService.getMovieById(req.params.id); 
+    const response = await MovieService.getMovieById(req.params.id);
     if (response.err) {
       errResponseBody.err = response.err;
       return res.status(response.code).json(errResponseBody);

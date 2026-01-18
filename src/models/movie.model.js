@@ -6,10 +6,12 @@ const movieSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      maxLength: 50,
     },
     description: {
       type: String,
       required: true,
+      minLength: 5,
     },
     casts: {
       type: [String],
