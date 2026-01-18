@@ -4,6 +4,7 @@ import express from "express";
 import path from "path";
 import connectDB from "./src/lib/db.js";
 import movieRoute from "./src/routes/movie.route.js";
+import theatreRoute from "./src/routes/theatre.route.js";
 
 const app = express();
 
@@ -14,7 +15,8 @@ app.use(express.static(path.join(path.resolve(), "public"))); // to serve static
 dotenv.config();
 
 //routes
-app.use("/bmt/api/v1", movieRoute); // to parse json body
+app.use("/bmt/api/v1", movieRoute);
+app.use("/bmt/api/v1/theatre", theatreRoute);
 
 const port = process.env.PORT;
 app.listen(port, async () => {
