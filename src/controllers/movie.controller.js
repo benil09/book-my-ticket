@@ -49,3 +49,22 @@ export const deleteMovie = async (req, res) => {
     return res.status(500).json(errResponseBody);
   }
 };
+
+export const updateMovie = async (req, res) => {
+  try {
+    const response = await MovieService.updateMovie(req.params.id, req.body);
+    if(response.err){
+      errResponseBody.err = response.err;
+      errResponseBody.code = response.code;
+      errResponseBody.message = "Validation failed on few parameters of request body";
+      return res.status(response.code).json(errResponseBody);
+    }
+    
+    successResponseBody.data = response;
+    return res.status(200).json(successResponseBody);
+  } catch (error) {
+    console.log(error.message);
+    errResponseBody.err = error
+    return res.status(500).json(errResponseBody);
+  }
+};

@@ -37,8 +37,30 @@ const deleteMoviebyid = async (id) => {
   return movie;
 };
 
+const updateMovie = async (id, data) => {
+  try {
+    const movie = await Movie.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true,
+    }); // {returnOriginal: false} in mongoose v5 will also work
+    return movie;
+  } catch (error) {
+    if (error.name === "ValidationError") {
+      let err = {};
+      Object.keys(error.errors).forEach((key) => {
+        err[key] = error.errors[key].message;
+      });
+      console.log(err);
+      return { err: err, code: 422 };
+    } else {
+      throw error;
+    }
+  }
+};
+
 export default {
   getMovieById,
   createMovie,
   deleteMoviebyid,
+  updateMovie,
 };
