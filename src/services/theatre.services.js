@@ -5,6 +5,13 @@ const createTheatre = async (theatreData) => {
     const response = await Theatre.create(theatreData);
     return response;
   } catch (error) {
+    if (error.name == "ValidationError") {
+      let err = {};
+      Object.keys(error.errors).forEach((key)=>{
+        err[key]= error.errors[key].message;
+      })
+      return {err : err , code:422}
+    }
     console.log(error);
     throw error;
   }
