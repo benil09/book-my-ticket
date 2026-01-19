@@ -6,7 +6,7 @@ const theatreSchema = new mongoose.Schema(
     description: { type: String },
     city: { type: String, required: true },
     address: { type: String, required: true },
-    
+    PIN: { type: Number , required: true },
     numberOfScreens: { type: Number, required: true },
     screens: [
       {
