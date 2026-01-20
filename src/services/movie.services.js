@@ -33,8 +33,19 @@ const createMovie = async (data) => {
 };
 
 const deleteMoviebyid = async (id) => {
-  const movie = Movie.findByIdAndDelete(id);
-  return movie;
+  try {
+    const movie = Movie.findByIdAndDelete(id);
+    if (!movie) {
+      return {
+        err: "No movie found with the given id",
+        code: 404,
+      };
+    }
+    return movie;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 const updateMovie = async (id, data) => {
@@ -58,25 +69,25 @@ const updateMovie = async (id, data) => {
   }
 };
 
-const fetchMovies = async (filter)=>{
+const fetchMovies = async (filter) => {
   let query = {};
-  if(filter.name){
-    query.name = filter.name
+  if (filter.name) {
+    query.name = filter.name;
   }
   const movies = await Movie.find(query);
-  if(!movies){
+  if (!movies) {
     return {
-      err : "No movies found",
-      code : 404
-    }
+      err: "No movies found",
+      code: 404,
+    };
   }
   return movies;
-}
+};
 
 export default {
   getMovieById,
   createMovie,
   deleteMoviebyid,
   updateMovie,
-  fetchMovies
+  fetchMovies,
 };
