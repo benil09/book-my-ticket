@@ -39,10 +39,11 @@ export const deleteMovie = async (req, res) => {
   try {
     const response = await MovieService.deleteMoviebyid(req.params.id);
     if (!response) {
-      errResponseBody.err = "No movie found with the given id";
+      errResponseBody.err =response.err; ;
       return res.status(404).json(errResponseBody);
     }
     successResponseBody.data = response;
+    successResponseBody.message = "Movie deleted successfully";
     return res.status(200).json(successResponseBody);
   } catch (error) {
     console.log(error);

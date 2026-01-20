@@ -35,4 +35,6 @@ const validateTheatreCreateRequest = (req, res, next) => {
   next();
 };
 
+
+
 export default { validateTheatreCreateRequest };
