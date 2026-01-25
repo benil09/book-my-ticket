@@ -17,13 +17,25 @@ const createTheatre = async (theatreData) => {
   }
 };
 
-const fetchTheatre = async (filter) => {
+const fetchTheatre = async (data) => {
   try {
     let query = {};
-    if (filter.name) {
-      query.name == filter.name;
+    if (data && data.city ) {
+      // this checks whether the city is present in the query params or not
+      query.city = data.city;
     }
-    const response = await Theatre.find();
+    if(data && data.PIN){
+      // this checks whether the pincode is present in the query params or not
+      query.PIN = data.PIN
+    }
+
+    if(data && data.name){
+      // this checks whether the name is present in the query param or not
+      query.name = data.name;
+    }
+
+    console.log(query);
+    const response = await Theatre.find(query);
     return response;
   } catch (error) {
     console.log(error);
@@ -107,7 +119,7 @@ const updateMoviesInTheatre = async (theatreId, movieIds, insert) => {
     }
 
     await theatre.save();
-    return theatre.populate('movies');
+    return theatre.populate("movies");
   } catch (error) {
     console.log(error);
     throw error;

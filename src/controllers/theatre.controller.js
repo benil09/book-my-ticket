@@ -31,7 +31,7 @@ export const getAllTheatres = async (req, res) => {
 
     successResponseBody.data = response;
     successResponseBody.message = "Fetched all theatres successfully";
-    return res.status(201).json(successResponseBody);
+    return res.status(200).json(successResponseBody);
   } catch (error) {
     console.log(error);
     errResponseBody.err = error;
