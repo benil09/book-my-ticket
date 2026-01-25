@@ -2,7 +2,7 @@ import bodyParser from "body-parser"; // Import body-parser
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import connectDB from "./src/lib/db.js";
+import connectDB from "./src/config/db.js";
 import movieRoute from "./src/routes/movie.route.js";
 import theatreRoute from "./src/routes/theatres.route.js";
 

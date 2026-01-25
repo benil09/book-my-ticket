@@ -95,3 +95,32 @@ export const updateTheatreById = async (req, res) => {
     return res.status(500).json(errResponseBody);
   }
 };
+
+/** 
+ * 
+ * @param  theatreId -> unique id of theatre whose movies are to be updated
+ * @param movieIds -> array of movie ids to be added or removed
+ * @param insert -> boolean value, true for adding movies, false for removing movies
+ * @returns -> the updated theatre object
+ */
+export const updateMoviesInTheatreById = async (req, res) => {
+  try {
+      const response = await theatreServices.updateMoviesInTheatre(
+          req.params.theatreId,
+          req.body.movieIds,
+          req.body.insert
+      );
+      if(response.err){
+          errResponseBody.err = response.err;
+          return res.status(response.code).json(errResponseBody);
+      }
+      successResponseBody.data = response;
+      successResponseBody.message = "Theatre movies updated successfully";
+      return res.status(200).json(successResponseBody);
+  } catch (error) {
+    console.log(error);
+    errResponseBody.err = error;
+    return res.status(500).json(errResponseBody);
+    
+  }
+}
