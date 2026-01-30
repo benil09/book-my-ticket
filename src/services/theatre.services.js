@@ -21,28 +21,28 @@ const fetchTheatre = async (data) => {
   try {
     let query = {};
     let pagination = {};
-    if (data && data.city ) {
+    if (data && data.city) {
       // this checks whether the city is present in the query params or not
       query.city = data.city;
     }
-    if(data && data.PIN){
+    if (data && data.PIN) {
       // this checks whether the pincode is present in the query params or not
-      query.PIN = data.PIN
+      query.PIN = data.PIN;
     }
 
-    if(data && data.name){
+    if (data && data.name) {
       // this checks whether the name is present in the query param or not
       query.name = data.name;
     }
 
-    if(data && data.limit){
-      pagination.limit = data.limit
+    if (data && data.limit) {
+      pagination.limit = data.limit;
     }
-    if(data && data.skip){
-      let perPage = (data.perPage)? perPage : 3
+    if (data && data.skip) {
+      let perPage = data.perPage ? perPage : 3;
       pagination.skip = data.skip * perPage;
     }
-    const response = await Theatre.find(query,{},pagination);
+    const response = await Theatre.find(query, {}, pagination);
     return response;
   } catch (error) {
     console.log(error);
@@ -96,6 +96,13 @@ const updateTheatre = async (id, data) => {
     }
     return response;
   } catch (error) {
+    if ((error.name = "ValidationError")) {
+      let err = {};
+      Object.keys(error.errors).forEach((key) => {
+        err[key] = error.errors[key].message;
+      });
+      return { err: err, code: 422 };
+    }
     console.log(error);
     throw error;
   }
@@ -103,7 +110,7 @@ const updateTheatre = async (id, data) => {
 
 const updateMoviesInTheatre = async (theatreId, movieIds, insert) => {
   try {
-    const theatre = await Theatre.findById(theatreId);
+    const theatre = await Theatre.findById(theatreId,{new:true , runValidators:true});
     if (!theatre) {
       return {
         err: "No theatre found for the given id",
@@ -113,19 +120,19 @@ const updateMoviesInTheatre = async (theatreId, movieIds, insert) => {
 
     if (insert) {
       //add movies
-      movieIds.forEach((movieId) => {
-        theatre.movies.push(movieId);
-      });
+      await Theatre.updateOne(
+        { _id: theatreId },
+        { $addToSet: { movies: { $each: movieIds } } },
+      );
     } else {
       //remove movies
-      let savedMoviesId = theatre.movies;
-      movieIds.forEach((movieId) => {
-        savedMoviesId = savedMoviesId.filter((id) => id != movieId);
-      });
-      theatre.movies = savedMoviesId;
+      await Theatre.updateOne(
+        { _id: theatreId },
+        { $pull: { movies: { $in: movieIds } } },
+      );
     }
 
-    await theatre.save();
+    // await theatre.save();
     return theatre.populate("movies");
   } catch (error) {
     console.log(error);

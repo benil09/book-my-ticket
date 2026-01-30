@@ -6,6 +6,7 @@ import connectDB from "./src/config/db.js";
 import movieRoute from "./src/routes/movie.route.js";
 import theatreRoute from "./src/routes/theatres.route.js";
 
+
 const app = express();
 
 app.use(bodyParser.json()); // to parse json body
@@ -23,4 +24,6 @@ app.listen(port, async () => {
   //this callback gets executed once we successfully start the server on given port
   console.log(`server started on port ${port}`);
   await connectDB();
+
+
 });

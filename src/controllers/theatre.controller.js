@@ -19,7 +19,7 @@ export const create = async (req, res) => {
   }
 };
 
-export const getAllTheatres = async (req, res) => {
+export const getAllTheatres = async (req, res) => { 
   try {
     const response = await theatreServices.fetchTheatre(req.query);
 
