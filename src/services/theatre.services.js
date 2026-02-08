@@ -28,8 +28,11 @@ const fetchTheatre = async (data) => {
       // this checks whether the pincode is present in the query params or not
       query.PIN = data.PIN;
     }
-    if (data && data.movieId) {
-      query.movie = { $all: data.movieId };
+    if (data?.movieId) {
+      const movieIds = Array.isArray(data.movieId)
+        ? data.movieId
+        : data.movieId.split(",");
+      query.movie = { $in: movieIds };
     }
     if (data && data.name) {
       // this checks whether the name is present in the query param or not
@@ -141,9 +144,12 @@ const updateMoviesInTheatre = async (theatreId, movieIds, insert) => {
 
 const getMoviesInTheatre = async (id) => {
   try {
-    const theatre = await Theatre.findById(id, { name: 1, movies: 1 }).populate('movies',{name:1,casts:1 });
+    const theatre = await Theatre.findById(id, { name: 1, movies: 1 }).populate(
+      "movies",
+      { name: 1, casts: 1 },
+    );
 
-    if (!theatre ) {
+    if (!theatre) {
       return {
         code: 404,
         err: "Theatre not found with the given id",
@@ -156,6 +162,23 @@ const getMoviesInTheatre = async (id) => {
   }
 };
 
+
+const checkMovieInATheatre = async (theatreId,movieId)=>{
+  try {
+    let response = await Theatre.findById(theatreId)
+    if(!response){
+      return {
+        code : 404,
+        err:"No such theatre found for the given id"
+      }
+    }
+    return response.movies.indexOf(movieId)!= -1; 
+  } catch (error) {
+    console.log(error)
+    throw error;
+    
+  }
+}
 export default {
   createTheatre,
   fetchTheatre,
@@ -163,5 +186,6 @@ export default {
   deleteTheatre,
   updateTheatre,
   updateMoviesInTheatre,
-  getMoviesInTheatre
+  getMoviesInTheatre,
+  checkMovieInATheatre
 };

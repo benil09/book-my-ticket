@@ -117,7 +117,21 @@ export const getMovies = async (req,res)=>{
     
   }
 }
-
+export const checkMovie = async (req,res)=>{
+  try {
+      const response = await theatreServices.checkMovieInATheatre(req.params.theatreId,req.params.movieId);
+      if(response.err){
+        errResponseBody.err = response.err
+        return res.status(response.code).json(errResponseBody)
+      }
+      successResponseBody.data = response
+      successResponseBody.message = "Successfully checked if movie is present in the theatre or not"
+      return res.status(200).json(successResponseBody)
+  } catch (error) {
+    errResponseBody.err=error;
+    return res.status(500).json(errResponseBody)
+  }
+}
 /** 
  * 
  * @param  theatreId -> unique id of theatre whose movies are to be updated
