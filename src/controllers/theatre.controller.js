@@ -1,4 +1,3 @@
-import { response } from "express";
 import theatreServices from "../services/theatre.services.js";
 import { errResponseBody, successResponseBody } from "../utils/responseBody.js";
 
@@ -137,7 +136,7 @@ export const checkMovie = async (req,res)=>{
  * @param  theatreId -> unique id of theatre whose movies are to be updated
  * @param movieIds -> array of movie ids to be added or removed
  * @param insert -> boolean value, true for adding movies, false for removing movies
- * @returns -> the updated theatre object
+ * @returns -> the updated theatre object 
  */
 export const updateMoviesInTheatreById = async (req, res) => {
   try {
