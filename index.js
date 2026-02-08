@@ -5,6 +5,7 @@ import path from "path";
 import connectDB from "./src/config/db.js";
 import movieRoute from "./src/routes/movie.route.js";
 import theatreRoute from "./src/routes/theatres.route.js";
+import mongoose from "mongoose";
 
 
 const app = express();
@@ -18,6 +19,8 @@ dotenv.config();
 //routes
 app.use("/bmt/api/v1", movieRoute);
 app.use("/bmt/api/v1", theatreRoute);
+
+// mongoose.set('debug',true) //
 
 const port = process.env.PORT;
 app.listen(port, async () => {

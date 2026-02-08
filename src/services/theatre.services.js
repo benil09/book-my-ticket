@@ -1,5 +1,4 @@
 import Theatre from "../models/theatre.model.js";
-import Movie from "../models/movie.model.js"
 const createTheatre = async (theatreData) => {
   try {
     const response = await Theatre.create(theatreData);
@@ -29,16 +28,14 @@ const fetchTheatre = async (data) => {
       // this checks whether the pincode is present in the query params or not
       query.PIN = data.PIN;
     }
-    if(data && data.movieId){
-      let movies =await Movie.findById(data.movieId);
-      console.log(movies);
-      query.movie = {$all:movies}
+    if (data && data.movieId) {
+      query.movie = { $all: data.movieId };
     }
     if (data && data.name) {
       // this checks whether the name is present in the query param or not
       query.name = data.name;
     }
-    
+
     if (data && data.limit) {
       pagination.limit = data.limit;
     }
@@ -120,7 +117,7 @@ const updateMoviesInTheatre = async (theatreId, movieIds, insert) => {
       theatre = await Theatre.findByIdAndUpdate(
         { _id: theatreId },
         { $addToSet: { movies: { $each: movieIds } } },
-        {new:true},
+        { new: true },
       );
     } else {
       //remove movies
@@ -131,12 +128,29 @@ const updateMoviesInTheatre = async (theatreId, movieIds, insert) => {
     }
     return theatre.populate("movies");
   } catch (error) {
-    if(error.name = "TypeError"){
-        return {
-          code:404,
-          err:"No theatre found on the given id"
-        }
+    if ((error.name = "TypeError")) {
+      return {
+        code: 404,
+        err: "No theatre found on the given id",
+      };
     }
+    console.log(error);
+    throw error;
+  }
+};
+
+const getMoviesInTheatre = async (id) => {
+  try {
+    const theatre = await Theatre.findById(id, { name: 1, movies: 1 }).populate('movies',{name:1,casts:1 });
+
+    if (!theatre ) {
+      return {
+        code: 404,
+        err: "Theatre not found with the given id",
+      };
+    }
+    return theatre;
+  } catch (error) {
     console.log(error);
     throw error;
   }
@@ -149,4 +163,5 @@ export default {
   deleteTheatre,
   updateTheatre,
   updateMoviesInTheatre,
+  getMoviesInTheatre
 };

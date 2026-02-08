@@ -3,6 +3,7 @@ import {
   create,
   deleteTheatreById,
   getAllTheatres,
+  getMovies,
   getTheatreById,
   updateMoviesInTheatreById,
   updateTheatreById,
@@ -12,6 +13,7 @@ import theatreMiddleware from "../middleware/theatre.middleware.js";
 const router = express.Router();
 
 router.post("/theatre", theatreMiddleware.validateTheatreCreateRequest, create);
+router.get("/theatre/:id/movies",getMovies)
 router.get("/theatre", getAllTheatres);
 router.get("/theatre/:id", getTheatreById);
 router.put("/theatre/:id", updateTheatreById);

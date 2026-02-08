@@ -1,3 +1,4 @@
+import { response } from "express";
 import theatreServices from "../services/theatre.services.js";
 import { errResponseBody, successResponseBody } from "../utils/responseBody.js";
 
@@ -96,6 +97,26 @@ export const updateTheatreById = async (req, res) => {
     return res.status(500).json(errResponseBody);
   }
 };
+
+export const getMovies = async (req,res)=>{
+  try {
+    const response = await theatreServices.getMoviesInTheatre(req.params.id);
+     if(response.err){
+     errResponseBody.err = response.err
+     return res.status(response.code).json(errResponseBody)
+    }
+
+    successResponseBody.data = response
+    successResponseBody.message = "Successfully fetched the movies for the theatre"
+    return res.status(200).json(successResponseBody)
+
+  } catch (error) {
+    console.log(error)
+    errResponseBody.err = error
+    return res.status(500).json(errResponseBody)
+    
+  }
+}
 
 /** 
  * 
