@@ -1,5 +1,5 @@
 import Theatre from "../models/theatre.model.js";
-
+import Movie from "../models/movie.model.js"
 const createTheatre = async (theatreData) => {
   try {
     const response = await Theatre.create(theatreData);
@@ -29,17 +29,21 @@ const fetchTheatre = async (data) => {
       // this checks whether the pincode is present in the query params or not
       query.PIN = data.PIN;
     }
-
+    if(data && data.movieId){
+      let movies =await Movie.findById(data.movieId);
+      console.log(movies);
+      query.movie = {$all:movies}
+    }
     if (data && data.name) {
       // this checks whether the name is present in the query param or not
       query.name = data.name;
     }
-
+    
     if (data && data.limit) {
       pagination.limit = data.limit;
     }
     if (data && data.skip) {
-      let perPage = data.perPage ? perPage : 3;
+      let perPage = data.perPage ? data.perPage : 3;
       pagination.skip = data.skip * perPage;
     }
     const response = await Theatre.find(query, {}, pagination);
