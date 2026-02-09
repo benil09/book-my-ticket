@@ -1,4 +1,5 @@
 import mongoose, { mongo } from "mongoose";
+import bcrypt from "bcryptjs";
 
 
 const userSchema = new mongoose.Schema({
@@ -27,11 +28,17 @@ const userSchema = new mongoose.Schema({
     userStatus:{
         type:String,
         enum:['PENDING','APPROVED','REJECTED'],
-        default:'PENDING',
+        default:'APPROVED',
         required:true
 
     }
 },{timestamps:true})
+
+userSchema.pre('save',async function(){
+    //trigger which is called before saving to encrypt the plain password
+    const hash = await bcrypt.hash(this.password,10);
+    this.password = hash
+})
 
 const User = mongoose.model("User",userSchema )
 export default User;
