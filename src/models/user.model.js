@@ -1,5 +1,6 @@
 import mongoose, { mongo } from "mongoose";
 import bcrypt from "bcryptjs";
+import { USER_ROLE,USER_STATUS } from "../utils/constants.js";
 
 
 const userSchema = new mongoose.Schema({
@@ -22,13 +23,19 @@ const userSchema = new mongoose.Schema({
     },
     userRole:{
         type:String,
-        enum:['CUSTOMER','ADMIN','THEATREOWNER'],
-        default:'CUSTOMER'
+        enum:{
+            values:Object.values(USER_ROLE),
+            message:`{VALUE} is not supported . Supported roles are ${Object.values(USER_ROLE)}` 
+        },
+        default:USER_ROLE.customer
     },
     userStatus:{
         type:String,
-        enum:['PENDING','APPROVED','REJECTED'],
-        default:'APPROVED',
+        enum:{
+            values:Object.values(USER_STATUS),
+            message:`{VALUE} is not supported . Supported status are ${Object.values(USER_STATUS)}`
+        },
+        default:USER_STATUS.approved,  
         required:true
 
     }
