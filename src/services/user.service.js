@@ -26,6 +26,15 @@ const createUser = async (data) => {
   }
 };
 
+const loginUser = async (data) => {}
+const logoutUser = async (data) => {}
+const forgotPassword = async (data) => {}
+
+
+
 export default {
   createUser,
+  loginUser,
+  logoutUser,
+  forgotPassword
 };
