@@ -26,7 +26,21 @@ const createUser = async (data) => {
   }
 };
 
-const loginUser = async (data) => {}
+const getUserByemail = async (email) => {
+  try {
+
+    const response =await User.findOne({email:email});
+    if(!response){
+      throw {err:"No user found on this email",code:404}
+    }
+    return response;
+    
+  } catch (error) {
+    console.log(error);
+    throw error
+    
+  }
+}
 const logoutUser = async (data) => {}
 const forgotPassword = async (data) => {}
 
@@ -34,7 +48,7 @@ const forgotPassword = async (data) => {}
 
 export default {
   createUser,
-  loginUser,
+  getUserByemail,
   logoutUser,
   forgotPassword
 };
