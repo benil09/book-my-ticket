@@ -10,6 +10,7 @@ import {
   checkMovie
 } from "../controllers/theatre.controller.js";
 import theatreMiddleware from "../middleware/theatre.middleware.js";
+import userMiddlewares from '../middleware/auth.middleware.js'
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.get("/theatre/:theatreId/movies/:movieId",checkMovie)
 router.get("/theatre", getAllTheatres);
 router.get("/theatre/:id", getTheatreById);
 router.put("/theatre/:id", updateTheatreById);
-router.delete("/theatre/:id", deleteTheatreById);
+router.delete("/theatre/:id",userMiddlewares.isAuthenticated, deleteTheatreById);
 router.patch(
   "/theatre/:theatreId/movies",
   theatreMiddleware.validateUpdateMoviesInTheatreRequest,

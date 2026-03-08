@@ -41,6 +41,21 @@ const getUserByemail = async (email) => {
     
   }
 }
+
+const getUserById = async (id)=>{
+  try {
+    const user = await User.findById(id);
+    if(!user){
+      throw {err:"No user found with the given id",code:404}
+    }
+
+    return user;
+  } catch (error) {
+    console.log(error)
+    throw error;
+    
+  }
+}
 const logoutUser = async (data) => {}
 const forgotPassword = async (data) => {}
 
@@ -49,6 +64,7 @@ const forgotPassword = async (data) => {}
 export default {
   createUser,
   getUserByemail,
+  getUserById,
   logoutUser,
   forgotPassword
 };
