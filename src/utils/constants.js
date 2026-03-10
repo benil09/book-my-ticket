@@ -10,4 +10,4 @@ const USER_ROLE = {
     theatreOwner :"THEATREOWNER"
 }
 
-export {USER_STATUS,USER_ROLE}
+export {USER_STATUS,USER_ROLE} 

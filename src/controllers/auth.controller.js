@@ -50,6 +50,32 @@ export const login = async ( req, res )=>{
 
 }
 
+export const resetPassword = async (req,res)=>{
+    try {
+        const user = await userService.getUserById(req.user);
+        const isOldPasswordCorrect = await user.isValidPassword(req.body.oldPass);
+
+        if(!isOldPasswordCorrect){
+            throw {err:"Invalid old password,please write the correct one",code:403}
+        }
+        user.password = req.body.newPass
+        await user.save();
+
+        successResponseBody.data = user;
+        successResponseBody.message = "successfully updated the password"
+
+        return res.status(200).json(successResponseBody)
+
+        
+    } catch (error) {
+        if(error.err){
+            errResponseBody.err = error.err;
+            return res.status(error.code).json(errResponseBody)
+        }
+        errResponseBody.err= error;
+        return res.status(500).json(errResponseBody)
+    }
+}
 export const logout = async ( req,res)=>{
 
 }

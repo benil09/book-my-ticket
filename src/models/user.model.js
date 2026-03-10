@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true,
-        unique:true
     },
     email:{
         type:String,
@@ -43,7 +42,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save',async function(){
     //trigger which is called before saving to encrypt the plain password
-    const hash = await bcrypt.hash(this.password,10);
+    const hash = await  bcrypt.hash(this.password,10);
     this.password = hash
 })
 
@@ -53,6 +52,6 @@ userSchema.methods.isValidPassword = async function(password){
     return compare;
 }
 
-const User = mongoose.model("User",userSchema )
+const User = mongoose.model("User",userSchema)
 export default User;
 
