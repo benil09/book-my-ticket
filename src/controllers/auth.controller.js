@@ -76,7 +76,7 @@ export const resetPassword = async (req,res)=>{
         return res.status(500).json(errResponseBody)
     }
 }
-export const logout = async ( req,res)=>{
+export const logout = async ( req , res )=>{
 
 }
 

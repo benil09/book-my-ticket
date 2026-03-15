@@ -8,6 +8,6 @@ router.post("/auth/signup",authMiddleware.validateSignUpRequest,signup);
 router.post("/auth/login", authMiddleware.validateLoginRequest  ,login);
 router.post("/auth/logout",logout);
 router.post("/auth/forgot-password",forgotPassword);
-router.patch("/auth/reset",authMiddleware.isAuthenticated,resetPassword);
+router.patch("/auth/reset",authMiddleware.isAuthenticated,authMiddleware.validateForgotPasswordRequest,resetPassword);
 
 export default router;

@@ -68,8 +68,23 @@ const isAuthenticated = async (req,res,next)=>{
   }
 }
 
+const validateForgotPasswordRequest = (req,res,next)=>{
+   // ! check if old password is provided or not
+   if(!req.body.oldPass){
+      errResponseBody.err = "Old password is necessary to reset password , please enter it "
+      return res.status(400).json(errResponseBody)
+   }
+
+   // ! check if new password is provided or not
+   if(!req.body.newPass){
+      errResponseBody.err="New password is required , please enter"
+      return res.status(400).json(errResponseBody)
+   }
+   next();
+}
 export default {
     validateSignUpRequest,
     validateLoginRequest ,
-    isAuthenticated
+    isAuthenticated,
+    validateForgotPasswordRequest
 }
