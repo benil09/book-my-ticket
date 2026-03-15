@@ -26,7 +26,7 @@ const validateSignUpRequest =async (req,res,next)=>{
 
 const validateLoginRequest = async (req,res,next)=>{
    if(!req.body.email){
-      errResponseBody.err = "Email is not pervided"
+      errResponseBody.err = "Email is not provided"
       return res.status(400).json(errResponseBody)
    }
    if(!req.body.password){
@@ -48,7 +48,7 @@ const isAuthenticated = async (req,res,next)=>{
    const response = jwt.verify(token,process.env.AUTH_KEY)
    if(!response){
       errResponseBody.err="Token not verified"
-      return res.stauts(401).josn(errResponseBody)
+      return res.status(401).json(errResponseBody)
    }
 
    const user = await userService.getUserById(response.id);

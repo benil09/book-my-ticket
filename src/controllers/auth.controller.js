@@ -26,7 +26,7 @@ export const signup =  async (req,res)=>{
 
 export const login = async ( req, res )=>{
     try {
-        const user = await userService.getUserByemail(req.body.email);
+        const user = await userService.getUserByEmail(req.body.email);
         const isValidPassword = await user.isValidPassword(req.body.password);
         if(!isValidPassword){
             throw {err:"invalid password for the given email",code:401}

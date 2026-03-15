@@ -26,7 +26,7 @@ const createUser = async (data) => {
   }
 };
 
-const getUserByemail = async (email) => {
+const getUserByEmail = async (email) => {
   try {
 
     const response =await User.findOne({email:email});
@@ -56,15 +56,40 @@ const getUserById = async (id)=>{
     
   }
 }
-const logoutUser = async (data) => {}
+
+const updateUserRoleOrStatus = async (data,userId) => {
+  try {
+    let updateQuery={}
+    if(data.userRole) updateQuery.userRole = data.userRole;
+    if(data.userStatus)  updateQuery.userStatus = data.userStatus;
+    let response = await User.findOneAndUpdate({_id:userId},updateQuery,{new:true,runValidators:true})
+    console.log(response)
+    if(!response){
+      throw {err:"user not found with the given id",code:404}
+    }
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+ 
+}
+const logoutUser = async (data) => {
+  try {
+    
+  } catch (error) {
+    
+  }
+}
 const forgotPassword = async (data) => {}
 
 
 
 export default {
   createUser,
-  getUserByemail,
+  getUserByEmail,
   getUserById,
   logoutUser,
-  forgotPassword
+  forgotPassword,
+  updateUserRoleOrStatus
 };

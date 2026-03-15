@@ -6,6 +6,7 @@ import connectDB from "./src/config/db.js";
 import movieRoute from "./src/routes/movie.route.js";
 import theatreRoute from "./src/routes/theatres.route.js";
 import authRoute from "./src/routes/auth.route.js"
+import userRoute from "./src/routes/user.route.js"
 import mongoose from "mongoose";
 
 
@@ -21,6 +22,7 @@ dotenv.config();
 app.use("/bmt/api/v1", movieRoute);
 app.use("/bmt/api/v1", theatreRoute);
 app.use("/bmt/api/v1/",authRoute);
+app.use("/bmt/api/v1/",userRoute);
 
 // mongoose.set('debug',true) //
 
