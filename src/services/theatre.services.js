@@ -1,4 +1,6 @@
 import Theatre from "../models/theatre.model.js";
+import { STATUS_CODES } from "../utils/constants.js";
+
 const createTheatre = async (theatreData) => {
   try {
     const response = await Theatre.create(theatreData);
@@ -9,7 +11,7 @@ const createTheatre = async (theatreData) => {
       Object.keys(error.errors).forEach((key) => {
         err[key] = error.errors[key].message;
       });
-      return { err: err, code: 422 };
+      throw { err: err, code: STATUS_CODES.unprocessableEntity };
     }
     console.log(error);
     throw error;
@@ -105,7 +107,7 @@ const updateTheatre = async (id, data) => {
       Object.keys(error.errors).forEach((key) => {
         err[key] = error.errors[key].message;
       });
-      return { err: err, code: 422 };
+      return { err: err, code: STATUS_CODES.unprocessableEntity };
     }
     console.log(error);
     throw error;
@@ -133,7 +135,7 @@ const updateMoviesInTheatre = async (theatreId, movieIds, insert) => {
   } catch (error) {
     if ((error.name = "TypeError")) {
       return {
-        code: 404,
+        code: STATUS_CODES.notFound,
         err: "No theatre found on the given id",
       };
     }

@@ -1,21 +1,20 @@
 import theatreServices from "../services/theatre.services.js";
 import { errResponseBody, successResponseBody } from "../utils/responseBody.js";
+import { STATUS_CODES } from "../utils/constants.js";
 
 export const create = async (req, res) => {
   try {
     const response = await theatreServices.createTheatre(req.body);
-    if (response.err) {
-      errResponseBody.err = response.err;
-      errResponseBody.message =
-        "Validation falied on few parameter of the request body";
-      return res.status(response.code).json(errResponseBody);
-    }
     successResponseBody.data = response;
     successResponseBody.message = "Theatre created successfully";
-    return res.status(201).json(successResponseBody);
+    return res.status(STATUS_CODES.created).json(successResponseBody);
   } catch (error) {
+    if(error.err){
+      errResponseBody.err = error.err;
+      return res.status(error.code).json(errResponseBody);
+    }
     errResponseBody.err = error;
-    return res.status(500).json(errResponseBody);
+    return res.status(STATUS_CODES.internalServerError).json(errResponseBody);
   }
 };
 
@@ -32,11 +31,11 @@ export const getAllTheatres = async (req, res) => {
 
     successResponseBody.data = response;
     successResponseBody.message = "Fetched all theatres successfully";
-    return res.status(200).json(successResponseBody);
+    return res.status(STATUS_CODES.ok).json(successResponseBody);
   } catch (error) {
     console.log(error);
     errResponseBody.err = error;
-    return res.status(500).json(errResponseBody);
+    return res.status(STATUS_CODES.internalServerError).json(errResponseBody);
   }
 };
 
@@ -50,11 +49,11 @@ export const getTheatreById = async (req, res) => {
     }
     successResponseBody.data = response;
     successResponseBody.message = "Theatre fetched successfully";
-    return res.status(200).json(successResponseBody);
+    return res.status(STATUS_CODES.ok).json(successResponseBody);
   } catch (error) {
     console.log(error);
     errResponseBody.err = error;
-    return res.status(500).json(errResponseBody);
+    return res.status(STATUS_CODES.internalServerError).json(errResponseBody);
   }
 };
 
@@ -68,11 +67,11 @@ export const deleteTheatreById = async (req, res) => {
     }
     successResponseBody.data = response;
     successResponseBody.message = "Theatre deleted successfully";
-    return res.status(200).json(successResponseBody);
+    return res.status(STATUS_CODES.ok).json(successResponseBody);
   } catch (error) {
     console.log(error);
     errResponseBody.err = error;
-    return res.status(500).json(errResponseBody);
+    return res.status(STATUS_CODES.internalServerError).json(errResponseBody);
   }
 };
 
@@ -89,7 +88,7 @@ export const updateTheatreById = async (req, res) => {
     }
     successResponseBody.data = response;
     successResponseBody.message = "Theatre updated successfully";
-    return res.status(200).json(successResponseBody);
+    return res.status(STATUS_CODES.ok).json(successResponseBody);
   } catch (error) {
     console.log(error);
     errResponseBody.err = error;
@@ -107,12 +106,12 @@ export const getMovies = async (req,res)=>{
 
     successResponseBody.data = response
     successResponseBody.message = "Successfully fetched the movies for the theatre"
-    return res.status(200).json(successResponseBody)
+    return res.status(STATUS_CODES.ok).json(successResponseBody)
 
   } catch (error) {
     console.log(error)
     errResponseBody.err = error
-    return res.status(500).json(errResponseBody)
+    return res.status(STATUS_CODES.internalServerError).json(errResponseBody)
     
   }
 }
@@ -125,10 +124,10 @@ export const checkMovie = async (req,res)=>{
       }
       successResponseBody.data = response
       successResponseBody.message = "Successfully checked if movie is present in the theatre or not"
-      return res.status(200).json(successResponseBody)
+      return res.status(STATUS_CODES.ok).json(successResponseBody)
   } catch (error) {
     errResponseBody.err=error;
-    return res.status(500).json(errResponseBody)
+    return res.status(STATUS_CODES.internalServerError).json(errResponseBody)
   }
 }
 /** 
@@ -151,11 +150,11 @@ export const updateMoviesInTheatreById = async (req, res) => {
       }
       successResponseBody.data = response;
       successResponseBody.message = "Theatre movies updated successfully";
-      return res.status(200).json(successResponseBody);
+      return res.status(STATUS_CODES.ok).json(successResponseBody);
   } catch (error) {
     console.log(error);
     errResponseBody.err = error;
-    return res.status(500).json(errResponseBody);
+    return res.status(STATUS_CODES.internalServerError).json(errResponseBody);
     
   }
 }
