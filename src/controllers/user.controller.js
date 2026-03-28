@@ -4,6 +4,7 @@ import { errResponseBody, successResponseBody } from "../utils/responseBody.js";
 
 export const updateUser = async(req,res)=>{
     try {
+        console.log(req.params.id)
         const response = await userService.updateUserRoleOrStatus(req.body,req.params.id);
         successResponseBody.data = response;
         successResponseBody.message = "successfully updated the user"

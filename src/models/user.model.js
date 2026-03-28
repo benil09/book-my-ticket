@@ -5,7 +5,7 @@ import { USER_ROLE,USER_STATUS } from "../utils/constants.js";
 
 const userSchema = new mongoose.Schema({
     name:{
-        type:String,
+        type:String, 
         required:true,
     },
     email:{
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
             values:Object.values(USER_STATUS),
             message:`{VALUE} is not supported . Supported status are ${Object.values(USER_STATUS)}`
         },
-        default:USER_STATUS.approved,  
+        default:USER_STATUS.pending,  
         required:true
 
     }

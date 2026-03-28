@@ -62,7 +62,7 @@ const updateUserRoleOrStatus = async (data,userId) => {
     let updateQuery={}
     if(data.userRole) updateQuery.userRole = data.userRole;
     if(data.userStatus)  updateQuery.userStatus = data.userStatus;
-    let response = await User.findOneAndUpdate({_id:userId},updateQuery,{new:true,runValidators:true})
+    let response = await User.findByIdAndUpdate({_id:userId},updateQuery,{new:true,runValidators:true})
     console.log(response)
     if(!response){
       throw {err:"user not found with the given id",code:404}

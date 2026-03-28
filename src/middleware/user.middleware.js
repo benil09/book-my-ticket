@@ -1,5 +1,5 @@
 import express from 'express'
-import { errResponseBody } from '../utils/responseBody';
+import { errResponseBody } from '../utils/responseBody.js';
 
 const validateUpdateRoleOrStatus = (req,res,next)=>{
    // * check if user role or user status is given in the request body

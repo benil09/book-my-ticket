@@ -54,6 +54,7 @@ export const resetPassword = async (req,res)=>{
     try {
         const user = await userService.getUserById(req.user);
         const isOldPasswordCorrect = await user.isValidPassword(req.body.oldPass);
+        console.log(isOldPasswordCorrect)
 
         if(!isOldPasswordCorrect){
             throw {err:"Invalid old password,please write the correct one",code:403}

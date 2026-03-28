@@ -2,6 +2,7 @@ import { errResponseBody,successResponseBody } from "../utils/responseBody.js"
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import userService from "../services/user.service.js";
+import { USER_ROLE } from "../utils/constants.js";
 
 dotenv.config();
 
@@ -82,9 +83,42 @@ const validateForgotPasswordRequest = (req,res,next)=>{
    }
    next();
 }
+
+const isAdmin = async (req,res,next)=>{
+   const user = await userService.getUserById(req.user);
+
+   if(user.userRole != USER_ROLE.admin){
+      errResponseBody.err = "User is not an admin , cannot proceed with the request"
+      return res.status(401).json(errResponseBody)
+   }
+next();
+}
+
+const isClient = async (req,res,next)=>{
+   const user = await userService.getUserById(req.user);
+   if(user.userRole != USER_ROLE.customer){
+      errResponseBody.err = "User is not a customer,cannot proceed with the request"
+      return res.status(401).json(errResponseBody)
+   }
+   next();
+}
+
+const isAdminOrClient = async(req,res,next)=>{
+   const user = await userService.getUserById(req.user)
+   if(user.userRole != USER_ROLE.admin && user.userRole != USER_ROLE.customer){
+      errResponseBody.err = 'user is neither a client nor an admin'
+      return res.status(401).json(errResponseBody)
+   }
+   next();
+}
+
 export default {
     validateSignUpRequest,
     validateLoginRequest ,
     isAuthenticated,
-    validateForgotPasswordRequest
+    validateForgotPasswordRequest,
+    isAdmin,
+    isClient,
+    isAdminOrClient
+   
 }
