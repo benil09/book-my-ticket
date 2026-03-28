@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import Movie from "../models/movie.model.js";
 
 dotenv.config();
 const connectDB = async () => {

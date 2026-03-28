@@ -8,6 +8,11 @@ const theatreSchema = new mongoose.Schema(
     address: { type: String, required: true },
     PIN: { type: Number , required: true },
     numberOfScreens: { type: Number, required: true },
+    movies:{
+      type : [mongoose.Schema.Types.ObjectId],
+      ref:"Movie",
+      default : []          
+    },
     screens: [
       {
         screenNumber: { type: Number, required: true },
