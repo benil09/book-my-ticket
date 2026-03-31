@@ -7,10 +7,10 @@ import movieRoute from "./src/routes/movie.route.js";
 import theatreRoute from "./src/routes/theatres.route.js";
 import authRoute from "./src/routes/auth.route.js"
 import userRoute from "./src/routes/user.route.js"
-import mongoose from "mongoose";
 
 
 const app = express();
+dotenv.config();
 
 app.use(bodyParser.json()); // to parse json body
 app.use(bodyParser.urlencoded({ extended: true })); // to parse url encoded body

@@ -6,7 +6,7 @@ const createTheatre = async (theatreData) => {
     const response = await Theatre.create(theatreData);
     return response;
   } catch (error) {
-    if (error.name == "ValidationError") {
+    if (error.name === "ValidationError") {
       let err = {};
       Object.keys(error.errors).forEach((key) => {
         err[key] = error.errors[key].message;
@@ -102,7 +102,7 @@ const updateTheatre = async (id, data) => {
     }
     return response;
   } catch (error) {
-    if ((error.name = "ValidationError")) {
+    if ((error.name === "ValidationError")) {
       let err = {};
       Object.keys(error.errors).forEach((key) => {
         err[key] = error.errors[key].message;
@@ -133,7 +133,7 @@ const updateMoviesInTheatre = async (theatreId, movieIds, insert) => {
     }
     return theatre.populate("movies");
   } catch (error) {
-    if ((error.name = "TypeError")) {
+    if ((error.name === "TypeError")) {
       return {
         code: STATUS_CODES.notFound,
         err: "No theatre found on the given id",

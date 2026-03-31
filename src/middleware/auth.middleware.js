@@ -57,7 +57,7 @@ const isAuthenticated = async (req,res,next)=>{
    next();
 
   } catch (error) {
-   if(error.code = STATUS_CODES.notFound){
+   if(error.code == STATUS_CODES.notFound){
       errResponseBody.err="User not found"
       return res.status(STATUS_CODES.notFound).json(errResponseBody);
    }

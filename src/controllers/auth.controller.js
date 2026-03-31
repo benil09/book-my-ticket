@@ -32,7 +32,6 @@ export const login = async ( req, res )=>{
             throw {err:"invalid password for the given email",code:401}
         }
         const token = jwt.sign({id:user.id , email:user.email},process.env.AUTH_KEY,{expiresIn:'1h'})
-        console.log(jwt.verify(token,process.env.AUTH_KEY))
         successResponseBody.message = "successfully logged in";
         successResponseBody.data = {email :user.email,role:user.userRole , status:user.userStatus, token:token }
         return res.status(200).json(successResponseBody);
@@ -63,6 +62,7 @@ export const resetPassword = async (req,res)=>{
         await user.save();
 
         successResponseBody.data = user;
+        delete successResponseBody.data.password;
         successResponseBody.message = "successfully updated the password"
 
         return res.status(200).json(successResponseBody)
