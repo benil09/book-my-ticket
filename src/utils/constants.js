@@ -30,8 +30,15 @@ const BOOKING_STATUS={
     processing:"PROCESSING"
 }
 
+const PAYMENT_STATUS={
+    failed:"FAILED",
+    success:"SUCCESS",
+    penidng:"PENDING"
+}
+
 export { USER_STATUS,
          USER_ROLE, 
         STATUS_CODES,
-        BOOKING_STATUS
+        BOOKING_STATUS,
+        PAYMENT_STATUS
      } 
