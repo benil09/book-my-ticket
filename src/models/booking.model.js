@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { BOOKING_STATUS } from "../utils/constants";
+import { BOOKING_STATUS } from "../utils/constants.js";
 const bookingSchema = new mongoose.Schema({
     theatreId:{
         type:mongoose.Schema.Types.ObjectId,
@@ -16,7 +16,7 @@ const bookingSchema = new mongoose.Schema({
         ref:"User",
         required:true
     },
-    timings:{
+    timing:{
         type:String ,
         required:true,
     },
@@ -31,11 +31,11 @@ const bookingSchema = new mongoose.Schema({
     },
     totalCost:{
         type:Number,
-        required:true
+        // required:true
     },
     seats:{
         type:Number,
-        required:true
+        // required:true
     }
 
 },{timestamps:true})

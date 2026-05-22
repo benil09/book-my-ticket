@@ -6,6 +6,7 @@ import connectDB from "./src/config/db.js";
 import movieRoute from "./src/routes/movie.route.js";
 import theatreRoute from "./src/routes/theatres.route.js";
 import authRoute from "./src/routes/auth.route.js"
+import bookingRoute from "./src/routes/booking.routes.js"
 import userRoute from "./src/routes/user.route.js"
 
 
@@ -23,6 +24,7 @@ app.use("/bmt/api/v1", movieRoute);
 app.use("/bmt/api/v1", theatreRoute);
 app.use("/bmt/api/v1/",authRoute);
 app.use("/bmt/api/v1/",userRoute);
+app.use("/bmt/api/v1/bookings",bookingRoute)
 
 // mongoose.set('debug',true) //
 
