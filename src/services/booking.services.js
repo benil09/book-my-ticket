@@ -10,15 +10,38 @@ const createBookingService =async (data)=>{
      if(error.name == "ValidationError"){
         let err={};
         Object.keys(error.errors).forEach((key)=>{
-            err[key] = error.errros[key].message;
+            err[key] = error.errors[key].message;
         })
-        throw {err:err,status:STATUS_CODES.unprocessableEntity};
+        throw {err:err,code:STATUS_CODES.unprocessableEntity};
      }
      throw error;
    }
 
 }
 
+const updateBookingService = async (bookingId,data)=>{
+    try {
+        const response = await Booking.findByIdAndUpdate(bookingId,data,{new:true,runValidators:true});
+        if(!response){
+            throw{
+                err:"No booking found on the given id",
+                code:STATUS_CODES.notFound
+            }
+        }
+        return response;
+    } catch (error) {
+        if(error.name == "ValidationError"){
+        let err={};
+        Object.keys(error.errors).forEach((key)=>{
+            err[key] = error.errors[key].message;
+        })
+        throw {err:err,code:STATUS_CODES.unprocessableEntity};
+     }
+     throw error;
+    }
+}
+
 export default {
-    createBookingService 
+    createBookingService ,
+    updateBookingService
 }

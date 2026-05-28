@@ -10,7 +10,6 @@ import {
   checkMovie
 } from "../controllers/theatre.controller.js";
 import theatreMiddleware from "../middleware/theatre.middleware.js";
-import userMiddlewares from '../middleware/auth.middleware.js'
 import authMiddleware from "../middleware/auth.middleware.js";
 
 const router = express.Router();

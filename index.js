@@ -1,4 +1,6 @@
 import bodyParser from "body-parser"; // Import body-parser
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./src/config/swagger.js";
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
@@ -26,6 +28,9 @@ app.use("/bmt/api/v1/",authRoute);
 app.use("/bmt/api/v1/",userRoute);
 app.use("/bmt/api/v1/bookings",bookingRoute)
 
+// Swagger documentation route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // mongoose.set('debug',true) //
 
 const port = process.env.PORT;
@@ -36,3 +41,4 @@ app.listen(port, async () => {
 
 
 });
+
